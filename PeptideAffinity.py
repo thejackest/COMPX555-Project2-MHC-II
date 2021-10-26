@@ -65,35 +65,38 @@ def printFormattedNumber(num, pos):
     else:
         print(str(num), end='\n')
 
-def checkFrequency(amino, ifBind, positionNumber):
+def checkFrequency(amino, isBind, positionNumber):
     bind = 0
     for peptide in peptideList:
         if(positionNumber < len(peptide[1])):
-            if(peptide[0] == ifBind and peptide[1][positionNumber] == amino):
+            if(peptide[0] == isBind and peptide[1][positionNumber] == amino):
                 bind += 1
     printFormattedNumber(bind, positionNumber)
 
-def createFrequencyChart():
+def createFrequencyChart(isBind):
     print(' ', end=": ")
     for i in range(30):
         printFormattedNumber(i+1, i) 
     for peptide in aa:
         print(peptide, end=": ")
         for x in range(30):
-            checkFrequency(peptide, '1', x)
+            checkFrequency(peptide, isBind, x)
+createFrequencyChart('0')
+createFrequencyChart('1')
 
 def checkPattern():
     bind = 0
     notBind = 0
     for peptide in peptideList:
-        if(peptide[1][0] == 'Q'or'A'or'P' 
-        and peptide[1][1] == 'Q' or 'A' or 'P' or 'L' or 'C' or 'V' or 'F' or 'K' or 'H' 
-        and peptide[1][5] == 'L' or 'V' or 'E'
-        and peptide[1][8] == 'I' or 'L'):
-            if(peptide[0] == '0'):
-                notBind += 1
-            else:
-                bind += 1
+        if(len(peptide[1]) > 8 ):
+            if((peptide[1][0] == 'Q'or'A'or'P' )
+            and (peptide[1][1] == 'Q' or 'A' or 'P' or 'L' or 'C' or 'V' or 'F' or 'K' or 'H' )
+            and (peptide[1][5] == 'L' or 'V' or 'E')
+            and (peptide[1][8] == 'I' or 'L')):
+                if(peptide[0] == '0'):
+                    notBind += 1
+                else:
+                    bind += 1
     print("binding: " + str(bind))
     print( "not binding: " + str(notBind))
 # checkPattern()
@@ -120,22 +123,25 @@ aaaa = []
 for i in aa:
     for j in aa:
         aaaa.append(i+j)
+        if (i == j):
+            break
 
+import re
 def findCharInPeptide():
     highest = ['',0]
-    for value in aaaa:
+    for value in aa:
         count = 0
         rate = 0
         for peptide in bindingList:
-            if(peptide.find(value) > 0):
+            if(peptide.find(value)> 0):
                 count += 1
         rate = count/566
         count = 0
         for peptide in notBindingList:
-            if(peptide.find(value) > 0):
+            if(peptide.find(value)> 0):
                 count += 1
         rate = rate - (count/962)
         if(count > highest[1]):
             highest = [value, rate]
     print('highest: ',highest)
-findCharInPeptide()
+# findCharInPeptide()
