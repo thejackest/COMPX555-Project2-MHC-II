@@ -81,8 +81,8 @@ def createFrequencyChart(isBind):
         print(peptide, end=": ")
         for x in range(30):
             checkFrequency(peptide, isBind, x)
-createFrequencyChart('0')
-createFrequencyChart('1')
+# createFrequencyChart('0')
+# createFrequencyChart('1')
 
 def checkPattern():
     bind = 0
@@ -123,12 +123,11 @@ aaaa = []
 for i in aa:
     for j in aa:
         aaaa.append(i+j)
-        if (i == j):
-            break
 
 import re
 def findCharInPeptide():
-    highest = ['',0]
+    highest = ['',-1]
+    lowest = ['', 1]
     for value in aa:
         count = 0
         rate = 0
@@ -141,7 +140,141 @@ def findCharInPeptide():
             if(peptide.find(value)> 0):
                 count += 1
         rate = rate - (count/962)
-        if(count > highest[1]):
+        if(rate > highest[1]):
             highest = [value, rate]
+        if(rate < lowest[1]):
+            lowest = [value, rate]
+    print('lowest:', lowest)
     print('highest: ',highest)
 # findCharInPeptide()
+
+def findCharInPeptideWithRE():
+    highest = ['',-1]
+    lowest = ['', 1]
+    for value in aaaa:
+        count = 0
+        rate = 0
+        for peptide in bindingList:
+            if(re.search(value[0] + ".*" + value[1], peptide)):
+                count += 1
+        rate = count/566
+        count = 0
+        for peptide in notBindingList:
+            if(re.search(value[0] + ".*" + value[1], peptide)):
+                count += 1
+        rate = rate - (count/962)
+        if(rate > highest[1]):
+            highest = [value, rate]
+        if(rate < lowest[1]):
+            lowest = [value, rate]
+    print('lowest:', lowest)
+    print('highest: ',highest)
+# findCharInPeptideWithRE()
+
+threeChar = []
+for i in aaaa:
+    for j in aa:
+        threeChar.append(i+j)
+def findCharInPeptideForThreeChar():
+    highest = ['',-1]
+    lowest = ['', 1]
+    for value in threeChar:
+        count = 0
+        rate = 0
+        for peptide in bindingList:
+            if(re.search(value[0] + ".*" + value[1] + ".*" + value[2], peptide)):
+                count += 1
+        rate = count/566
+        count = 0
+        for peptide in notBindingList:
+            if(re.search(value[0] + ".*" + value[1] + ".*" + value[2], peptide)):
+                count += 1
+        rate = rate - (count/962)
+        if(rate > highest[1]):
+            highest = [value, rate]
+        if(rate < lowest[1]):
+            lowest = [value, rate]
+        # print(value, rate)
+    print('lowest:', lowest)
+    print('highest: ',highest)
+# findCharInPeptideForThreeChar()
+
+fourChar = []
+for i in threeChar:
+    for j in aa:
+        fourChar.append(i+j)
+def findCharInPeptideForFourChar():
+    highest = ['',-1]
+    lowest = ['', 1]
+    for value in fourChar:
+        count = 0
+        rate = 0
+        for peptide in bindingList:
+            if(re.search(value[0] + ".*" + value[1] + ".*" + value[2]+ ".*" + value[3], peptide)):
+                count += 1
+        rate = count/566
+        count = 0
+        for peptide in notBindingList:
+            if(re.search(value[0] + ".*" + value[1] + ".*" + value[2]+ ".*" + value[3], peptide)):
+                count += 1
+        rate = rate - (count/962)
+        if(rate > highest[1]):
+            highest = [value, rate]
+        if(rate < lowest[1]):
+            lowest = [value, rate]
+    print('lowest:', lowest)
+    print('highest: ',highest)
+# findCharInPeptideForFourChar()
+
+fiveChar = []
+for i in fourChar:
+    for j in aa:
+        fiveChar.append(i+j)
+def findCharInPeptideForFiveChar():
+    highest = ['',-1]
+    lowest = ['', 1]
+    for value in fiveChar:
+        count = 0
+        rate = 0
+        for peptide in bindingList:
+            if(re.search(value[0] + ".*" + value[1] + ".*" + value[2]+ ".*" + value[3]+ ".*" + value[4], peptide)):
+                count += 1
+        rate = count/566
+        count = 0
+        for peptide in notBindingList:
+            if(re.search(value[0] + ".*" + value[1] + ".*" + value[2]+ ".*" + value[3]+ ".*" + value[4], peptide)):
+                count += 1
+        rate = rate - (count/962)
+        if(rate > highest[1]):
+            highest = [value, rate]
+        if(rate < lowest[1]):
+            lowest = [value, rate]
+    print('lowest:', lowest)
+    print('highest: ',highest)
+# findCharInPeptideForFiveChar()
+sixChar = []
+for i in fiveChar:
+    for j in aa:
+        sixChar.append(i+j)
+def findCharInPeptideForSixChar():
+    highest = ['',-1]
+    lowest = ['', 1]
+    for value in sixChar:
+        count = 0
+        rate = 0
+        for peptide in bindingList:
+            if(re.search(value[0] + ".*" + value[1] + ".*" + value[2]+ ".*" + value[3]+ ".*" + value[4]+ ".*" + value[5], peptide)):
+                count += 1
+        rate = count/566
+        count = 0
+        for peptide in notBindingList:
+            if(re.search(value[0] + ".*" + value[1] + ".*" + value[2]+ ".*" + value[3]+ ".*" + value[4]+ ".*" + value[5], peptide)):
+                count += 1
+        rate = rate - (count/962)
+        if(rate > highest[1]):
+            highest = [value, rate]
+        if(rate < lowest[1]):
+            lowest = [value, rate]
+    print('lowest:', lowest)
+    print('highest: ',highest)
+# findCharInPeptideForSixChar()
